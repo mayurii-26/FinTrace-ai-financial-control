@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BASE
+───────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    font-size: 15px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11', 'ss01';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar          { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track    { background: transparent; }
+  ::-webkit-scrollbar-thumb    { @apply bg-slate-300 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-slate-400; }
+
+  /* Selection */
+  ::selection { @apply bg-blue-100 text-blue-900; }
+
+  /* Remove default details/summary arrow */
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   COMPONENTS
+───────────────────────────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Cards ───────────────────────────────────────────── */
+  .card {
+    @apply bg-white border border-slate-200 rounded-xl shadow-sm;
+  }
+  .card-header {
+    @apply px-6 py-4 border-b border-slate-100;
+  }
+
+  /* ── Buttons ─────────────────────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2
+           bg-blue-600 hover:bg-blue-700 active:bg-blue-800
+           text-white text-[13px] font-semibold rounded-lg
+           transition-colors shadow-sm select-none;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-3 py-2
+           text-slate-500 hover:text-slate-800
+           hover:bg-white border border-transparent hover:border-slate-200
+           text-[13px] font-medium rounded-lg transition-colors select-none;
+  }
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2
+           bg-red-600 hover:bg-red-700 active:bg-red-800
+           text-white text-[13px] font-semibold rounded-lg
+           transition-colors shadow-sm select-none;
+  }
+
+  /* ── Form fields ─────────────────────────────────────── */
+  .input {
+    @apply bg-white border border-slate-200 text-slate-900 text-sm rounded-lg
+           px-3 py-2 placeholder:text-slate-400
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+           shadow-sm transition-shadow;
+  }
+  .select {
+    @apply bg-white border border-slate-200 text-slate-900 text-sm rounded-lg
+           px-3 py-2 pr-8
+           focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+           shadow-sm cursor-pointer;
+    appearance: auto;
+  }
+
+  /* ── Typography ─────────────────────────────────────── */
+  .page-title {
+    @apply text-[30px] font-bold text-slate-900 tracking-tight leading-tight;
+  }
+  .page-subtitle {
+    @apply text-[13px] text-slate-500 mt-1 font-normal;
+  }
+  .section-title {
+    @apply text-[15px] font-semibold text-slate-900 leading-snug;
+  }
+  .section-subtitle {
+    @apply text-[13px] text-slate-500 mt-0.5 leading-snug;
+  }
+
+  /* ── Data table ─────────────────────────────────────── */
+  .data-table {
+    @apply w-full text-[13px];
+    border-collapse: collapse;
+  }
+  .data-table thead {
+    @apply bg-slate-50 border-b border-slate-200;
+  }
+  .data-table th {
+    @apply px-4 py-3 text-left text-[11px] font-semibold text-slate-500
+           uppercase tracking-wider whitespace-nowrap;
+  }
+  .data-table td {
+    @apply px-4 py-3 border-b border-slate-100 text-slate-700;
+  }
+  .data-table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+  .data-table tbody tr {
+    @apply hover:bg-slate-50 transition-colors;
+  }
+
+  /* ── Monetary amounts ───────────────────────────────── */
+  .amount {
+    @apply font-mono font-semibold tabular-nums tracking-tight;
+  }
+  .amount-negative { @apply amount text-red-600; }
+  .amount-positive { @apply amount text-emerald-600; }
+  .amount-neutral  { @apply amount text-slate-900; }
+
+  /* ── KPI values ─────────────────────────────────────── */
+  .kpi-value {
+    @apply text-[32px] font-bold font-mono tabular-nums leading-none tracking-tight;
+  }
+  .kpi-value-lg {
+    @apply text-[36px] font-bold font-mono tabular-nums leading-none tracking-tight;
+  }
+
+  /* ── Mono text ──────────────────────────────────────── */
+  .mono {
+    @apply font-mono tabular-nums text-slate-600;
+  }
+
+  /* ── Dividers ───────────────────────────────────────── */
+  .divider {
+    @apply h-px w-full bg-slate-100;
+  }
+
+  /* ── Stat label ─────────────────────────────────────── */
+  .stat-label {
+    @apply text-[11px] font-semibold uppercase tracking-widest text-slate-400;
+  }
+
+  /* ── Pill / chip ────────────────────────────────────── */
+  .chip {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded
+           text-[11px] font-medium border;
+  }
+}
