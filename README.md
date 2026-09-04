@@ -268,6 +268,80 @@ The exception becomes **VERIFIED** only when the deterministic verification succ
 
 ---
 
+## 🌟 Hero Scenario & Ambiguous Safeguard
+
+### Hero Exception — Financial Lifecycle Break
+
+A transaction appears successful at the payment layer, but its complete financial lifecycle does not close.
+
+- Customer payment is successfully captured
+- Payment enters the expected settlement lifecycle
+- A subsequent refund is processed
+- The corresponding downstream financial adjustment is missing
+- Actual settlement no longer reconciles with the expected financial state
+- **Result → unresolved financial exposure**
+
+**FinTrace Investigation:**
+
+FinTrace reconstructs the complete transaction lifecycle:
+
+`ORDER → PAYMENT → REFUND → FEE & TAX → EXPECTED SETTLEMENT → ACTUAL SETTLEMENT → BANK CREDIT`
+
+It identifies the exact stage where the lifecycle breaks, links the exception to the underlying financial records, and calculates the resulting exposure using deterministic financial logic.
+
+**AI Diagnosis:** The AI investigates the exception using controlled, read-only financial tools and returns:
+
+- Root-cause hypothesis
+- Supporting evidence
+- Missing evidence
+- Confidence score
+- Financial impact
+- Recommended controller action
+
+**Human-in-the-Loop:** The AI cannot directly mutate financial records. A controller reviews the recommendation and explicitly approves, rejects, or escalates the proposed action.
+
+**Closed-Loop Verification:** After the controller action, FinTrace reruns the deterministic controls and verifies whether the lifecycle is restored.
+
+> **AI proposes. Deterministic controls prove.**
+
+---
+
+### Human Review Safeguard — Insufficient Evidence
+
+Not every financial exception should be automatically resolved.
+
+- A transaction shows an inconsistent relationship between financial events
+- The available records indicate a possible control break
+- However, one or more required downstream records are missing
+- The available evidence is insufficient to establish a reliable root cause
+- FinTrace **refuses to guess**
+
+**AI Decision:** Instead of hallucinating a cause or assuming a missing financial value, FinTrace returns:
+
+`HUMAN_REVIEW`
+
+with:
+
+- `confidence < 0.70`
+- `missing_evidence`
+- Available supporting evidence
+- Explanation of why automated resolution is unsafe
+- Recommended information required from the controller
+
+**Safeguard Rules:**
+
+| Confidence | FinTrace Decision |
+|------------|-------------------|
+| `≥ 0.90` | High-confidence recommendation |
+| `0.70 – 0.89` | Controller verification required |
+| `< 0.70` | Mandatory human review |
+
+No LLM-generated value can override deterministic financial calculations.
+
+> **No evidence → no assumption → human review.**
+
+---
+
 ## ⭐ What Makes FinTrace Different
 
 ### 1. Financial Lifecycle Integrity
@@ -750,25 +824,15 @@ The FastAPI backend connects through the configured backend database connection.
 
 ---
 
-## 💳 Razorpay Integration
+## 💳 Razorpay Compatibility
 
-FinTrace includes a Razorpay integration layer designed for Test Mode.
+FinTrace is designed with a dedicated Razorpay integration layer so that the platform can be extended to work with Razorpay Test Mode data and APIs.
 
-The integration is intentionally separated from the core deterministic evaluation engine.
+The current benchmark and evaluation flow **does not depend on live Razorpay API access**.
 
-This allows the project to demonstrate Razorpay compatibility without requiring live financial transactions during evaluation.
+Instead, FinTrace uses a controlled synthetic financial dataset as the authoritative evaluation environment. This ensures that detection accuracy, financial exposure, investigation quality, and resolution verification can be measured consistently without requiring live financial transactions.
 
-Configuration:
-
-```
-RAZORPAY_KEY_ID=
-RAZORPAY_KEY_SECRET=
-RAZORPAY_MODE=test
-```
-
-The Razorpay SDK is available through the backend integration layer.
-
-> **Important:** FinTrace does not require live-money operations for the benchmark. The synthetic financial-control dataset is the authoritative evaluation environment.
+> **Current Status:** Razorpay API integration is planned as an extension. The core FinTrace control and investigation workflow operates independently of live Razorpay APIs.
 
 ---
 
